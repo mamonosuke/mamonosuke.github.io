@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="SL360">
+    <head>
+        <meta charset="UTF-8">
+        <title>SL360</title>
+        <!-- lib -->
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+        <!-- components -->
+        <script type="text/javascript" src="app/components/panoramaView/panoramaViewCtrl.js"></script>
+        <!-- app -->
+        <script type="text/javascript" src="app/app.modules.js"></script>
+        <script type="text/javascript" src="app/app.routes.js"></script>
+        <script type="text/javascript" src="app/app.js"></script>
+        <!-- css -->
+        <link rel="stylesheet" href="assets/css/sl360.css">
+    </head>
+    <body ng-controller="panoramaViewCtrl">
+    	<div id="error" class="pv-error pv-text">お使いのブラウザーではご利用になれません。<br>（対応ブラウザー：IE11, Edge, Chrome, Firefox）</div>
+    	<div class="pv-title pv-text">{{panorama.title}}</div>
+    	<div class="pv-date pv-text">{{panorama.date}}</div>
+        <div class="pv-thumbs" ng-if="panoramas">
+            <img ng-src="assets/images/thumbs/{{value.thumbName}}" class="pv-thumb" ng-repeat="(key, value) in panoramas" ng-click="setImage(value)" ng-if="key != 'default'">
+        </div>
+    </body>
+</html>
