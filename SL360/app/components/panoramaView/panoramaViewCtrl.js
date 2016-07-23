@@ -64,9 +64,9 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         renderer.domElement.addEventListener('mousemove', mouseMove, false);
         renderer.domElement.addEventListener('mouseup', mouseUp, false);
 
-        renderer.domElement.addEventListener('touchstart', mouseDown, false);
-        renderer.domElement.addEventListener('touchmove', mouseMove, false);
-        renderer.domElement.addEventListener('touchend', mouseUp, false);
+        renderer.domElement.addEventListener('touchstart', touchStart, false);
+        renderer.domElement.addEventListener('touchmove', touchMove, false);
+        renderer.domElement.addEventListener('touchend', touchEnd, false);
 
         if (!zoomDisabled) {
             renderer.domElement.addEventListener('mousewheel', mouseWheel, true);
@@ -93,6 +93,29 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         function mouseUp() {
             isMouseDown = false;
         }
+
+        function touchStart(event) {
+            event.preventDefault();
+            isMouseDown = true;
+            if(event.targetTouches && event.targetTouches.length){
+                mouseDownX = event.targetTouches[0].clientX;
+                mouseDownY = event.targetTouches[0].clientY;
+                mouseDownLon = lon;
+                mouseDownLat = lat;
+            }
+        }
+
+        function touchMove(event) {
+            if (isMouseDown) {
+                lon = (mouseDownX - event.targetTouches[0].clientX) * camera.fov * 0.0015 + mouseDownLon;
+                lat = (event.targetTouches[0].clientY - mouseDownY) * camera.fov * 0.0015 + mouseDownLat;
+            }
+        }
+
+        function touchEnd() {
+            isMouseDown = false;
+        }
+
 
         function mouseWheel(event) {
             camera.fov += Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail))) * -5;
