@@ -95,9 +95,7 @@ body {
     height: 100px;
     position: absolute;
     border-radius: 50%;
-    border: 8px solid #fff;
+    border: 40px solid rgba(255, 255, 255, 0.5);
     border-right-color: transparent;
-    animation: spin 1s linear infinite;
-    -webkit-animation: spin 1s infinite linear;
-    -moz-animation: spin 1s infinite linear;
+    animation: spin 2s linear infinite;
 }
