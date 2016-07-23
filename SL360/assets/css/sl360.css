@@ -74,3 +74,10 @@ body{
     right: 18px;
 }
 
+.pv-loading {
+    display: none;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    top: calc(50% - 1em);
+}

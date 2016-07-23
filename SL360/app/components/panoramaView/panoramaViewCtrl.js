@@ -54,10 +54,11 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         $scope.setImage = function (panorama) {
             $scope.panorama = panorama;
             imagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
-            sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath);
+            sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, new THREE.UVMapping(), hideLoading);
             lon = panorama.lon;
             lat = panorama.lat;
             render();
+            showLoading();
         };
 
         renderer.domElement.addEventListener('mousedown', mouseDown, false);
@@ -97,7 +98,7 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         function touchStart(event) {
             event.preventDefault();
             isMouseDown = true;
-            if(event.targetTouches && event.targetTouches.length){
+            if (event.targetTouches && event.targetTouches.length) {
                 mouseDownX = event.targetTouches[0].clientX;
                 mouseDownY = event.targetTouches[0].clientY;
                 mouseDownLon = lon;
@@ -150,6 +151,19 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
             camera.lookAt(camera.target);
             renderer.render(scene, camera);
             requestAnimationFrame(render);
+        }
+
+        function showLoading() {
+            setTimeout(function () {
+                angular.element(document.getElementsByClassName('pv-loading')[0]).addClass('pv-show');
+            }, 1000);
+
+        }
+
+        function hideLoading() {
+            setTimeout(function () {
+                angular.element(document.getElementsByClassName('pv-loading')[0]).removeClass('pv-show');
+            }, 1000);
         }
 
         document.body.appendChild(renderer.domElement);
