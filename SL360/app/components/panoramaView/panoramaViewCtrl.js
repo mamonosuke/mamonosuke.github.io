@@ -1,43 +1,57 @@
 'use strict';
 var components = angular.module('components', []);
-components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', function($scope, $location, panoramas) {
+components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', function ($scope, $location, panoramas) {
     panoramas.all(loaded);
 
     function loaded(panoramas) {
+
         var querySearch = $location.search();
         var imageId = querySearch['id'];
         var zoomDisabled = querySearch['zd'] == 'false';
         var imagePath = 'assets/images/panoramas/default.jpg';
         var isMouseDown = false;
         var lon, lat, fov = 80;
+
         if (zoomDisabled) {
             fov = 100;
         }
+
         var mouseDownX, mouseDownY, mouseDownLon, mouseDownLat;
         var renderer;
+
         try {
             renderer = new THREE.WebGLRenderer();
         } catch (e) {
-        	setTimeout(function(){
-        		angular.element(document.getElementsByClassName('pv-error')[0]).addClass('pv-show');
-        	},1000);
-        	return;
+            setTimeout(function () {
+                angular.element(document.getElementsByClassName('pv-error')[0]).addClass('pv-show');
+            }, 1000);
+            return;
         }
+
         renderer.setSize(window.innerWidth, window.innerHeight);
+
         var camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 1, 1000);
+
         camera.target = new THREE.Vector3(0, 0, 0);
-        var sphere = new THREE.SphereGeometry(100,  50, 25);
+
+        var sphere = new THREE.SphereGeometry(100, 50, 25);
         sphere.applyMatrix(new THREE.Matrix4().makeScale(-1, 1, 1));
+
         var sphereMaterial = new THREE.MeshBasicMaterial();
         sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath);
+
         var sphereMesh = new THREE.Mesh(sphere, sphereMaterial);
+
         var scene = new THREE.Scene();
         scene.add(sphereMesh);
+
         if (!imageId) {
             $scope.panoramas = panoramas;
         }
+
         $scope.panorama = panoramas[imageId || 'default'] || panoramas['default'];
-        $scope.setImage = function(panorama) {
+
+        $scope.setImage = function (panorama) {
             $scope.panorama = panorama;
             imagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
             sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath);
@@ -45,9 +59,15 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
             lat = panorama.lat;
             render();
         };
+
         renderer.domElement.addEventListener('mousedown', mouseDown, false);
         renderer.domElement.addEventListener('mousemove', mouseMove, false);
         renderer.domElement.addEventListener('mouseup', mouseUp, false);
+
+        renderer.domElement.addEventListener('touchstart', mouseDown, false);
+        renderer.domElement.addEventListener('touchmove', mouseMove, false);
+        renderer.domElement.addEventListener('touchend', mouseUp, false);
+
         if (!zoomDisabled) {
             renderer.domElement.addEventListener('mousewheel', mouseWheel, true);
             renderer.domElement.addEventListener('DOMMouseScroll', mouseWheel, true);
@@ -108,6 +128,7 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
             renderer.render(scene, camera);
             requestAnimationFrame(render);
         }
+
         document.body.appendChild(renderer.domElement);
         $scope.setImage($scope.panorama);
     }
