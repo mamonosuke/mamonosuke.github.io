@@ -54,7 +54,7 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         $scope.setImage = function (panorama) {
             $scope.panorama = panorama;
             imagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
-            sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, hideLoading);
+            sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, {}, hideLoading);
             lon = panorama.lon;
             lat = panorama.lat;
             render();
