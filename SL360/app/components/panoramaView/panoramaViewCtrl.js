@@ -154,16 +154,11 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         }
 
         function showLoading() {
-            setTimeout(function () {
-                angular.element(document.getElementsByClassName('pv-loading')[0]).addClass('pv-show');
-            }, 1000);
-
+            angular.element(document.getElementsByClassName('pv-loading')[0]).addClass('pv-show');
         }
 
         function hideLoading() {
-            setTimeout(function () {
-                angular.element(document.getElementsByClassName('pv-loading')[0]).removeClass('pv-show');
-            }, 1000);
+            angular.element(document.getElementsByClassName('pv-loading')[0]).removeClass('pv-show');
         }
 
         document.body.appendChild(renderer.domElement);
