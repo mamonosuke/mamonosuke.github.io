@@ -53,12 +53,19 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
 
         $scope.setImage = function (panorama) {
             $scope.panorama = panorama;
-            imagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
-            sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, {}, hideLoading);
-            lon = panorama.lon;
-            lat = panorama.lat;
+
+            var newImagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
+
+            if (imagePath != newImagePath) {
+                imagePath = newImagePath;
+                sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, {}, hideLoading);
+                lon = panorama.lon;
+                lat = panorama.lat;
+                showLoading();
+            }
+
             render();
-            showLoading();
+
         };
 
         renderer.domElement.addEventListener('mousedown', mouseDown, false);
