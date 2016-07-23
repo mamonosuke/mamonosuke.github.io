@@ -54,15 +54,11 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         $scope.setImage = function (panorama) {
             $scope.panorama = panorama;
 
-            var newImagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
-
-            if (imagePath != newImagePath) {
-                imagePath = newImagePath;
-                sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, {}, hideLoading);
-                lon = panorama.lon;
-                lat = panorama.lat;
-                showLoading();
-            }
+            imagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
+            sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, {}, hideLoading);
+            lon = panorama.lon;
+            lat = panorama.lat;
+            showLoading();
 
             render();
 
@@ -165,7 +161,9 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         }
 
         function hideLoading() {
-            angular.element(document.getElementsByClassName('pv-loading')[0]).removeClass('pv-show');
+            setTimeout(function () {
+                angular.element(document.getElementsByClassName('pv-loading')[0]).removeClass('pv-show');
+            }, 1000);
         }
 
         document.body.appendChild(renderer.domElement);
