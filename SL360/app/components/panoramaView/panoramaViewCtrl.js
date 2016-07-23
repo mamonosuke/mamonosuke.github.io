@@ -8,7 +8,7 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         var querySearch = $location.search();
         var imageId = querySearch['id'];
         var zoomDisabled = querySearch['zd'] == 'false';
-        var imagePath = 'assets/images/panoramas/default.jpg';
+        var imagePath;
         var isMouseDown = false;
         var lon, lat, fov = 80;
 
@@ -38,7 +38,7 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         sphere.applyMatrix(new THREE.Matrix4().makeScale(-1, 1, 1));
 
         var sphereMaterial = new THREE.MeshBasicMaterial();
-        sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath);
+        sphereMaterial.map = THREE.ImageUtils.loadTexture('assets/images/panoramas/default.jpg');
 
         var sphereMesh = new THREE.Mesh(sphere, sphereMaterial);
 
@@ -58,11 +58,11 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
             var newImagePath = 'assets/images/panoramas/' + $scope.panorama.imageName;
 
             if (imagePath != newImagePath) {
+                showLoading();
                 imagePath = newImagePath;
                 sphereMaterial.map = THREE.ImageUtils.loadTexture(imagePath, {}, hideLoading);
                 lon = panorama.lon;
                 lat = panorama.lat;
-                showLoading();
             }
 
             render();
@@ -166,9 +166,7 @@ components.controller('panoramaViewCtrl', ['$scope', '$location', 'panoramas', f
         }
 
         function hideLoading() {
-            setTimeout(function () {
-                angular.element(document.getElementsByClassName('pv-loading')[0]).removeClass('pv-show');
-            }, 100);
+            angular.element(document.getElementsByClassName('pv-loading')[0]).removeClass('pv-show');
         }
 
         document.body.appendChild(renderer.domElement);

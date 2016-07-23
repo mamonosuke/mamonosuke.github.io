@@ -89,13 +89,13 @@ body {
 .pv-loading {
     display: none;
     text-align: center;
-    top: calc(50% - 50px);
-    left: calc(50% - 50px);;
-    width: 100px;
-    height: 100px;
+    top: calc(50% - 60px);
+    left: calc(50% - 60px);;
+    width: 80px;
+    height: 80px;
     position: absolute;
     border-radius: 50%;
-    border: 40px solid rgba(255, 255, 255, 0.5);
+    border: 20px solid rgba(255, 255, 255, 0.5);
     border-right-color: transparent;
     animation: spin 2s linear infinite;
 }
