@@ -4,7 +4,7 @@
     overflow: hidden;
 }
 
-body{
+body {
     background-color: black;
     color: white;
 }
@@ -16,18 +16,18 @@ body{
     width: 100%;
     height: 112px;
     white-space: nowrap;
-    overflow-x: auto; 
+    overflow-x: auto;
 }
 
-.pv-hidden.pv-thumbs{
+.pv-hidden.pv-thumbs {
     bottom: -110px;
 }
 
-.pv-thumbs-button{
-    
+.pv-thumbs-button {
+
 }
 
-.pv-hidden.pv-thumbs-button{
+.pv-hidden.pv-thumbs-button {
 
 }
 
@@ -51,7 +51,7 @@ body{
     margin: 10px 0 0 10px;
 }
 
-.pv-thumb>img {
+.pv-thumb > img {
     width: 100px;
     height: 100px;
 }
@@ -74,17 +74,16 @@ body{
     right: 18px;
 }
 
-.pv-loading-position {
+.pv-loading {
     display: none;
     text-align: center;
-    top: calc(50% - 1em);
-}
-
-.pv-loading {
-    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);;
     width: 100px;
     height: 100px;
+    position: absolute;
     border-radius: 50%;
     border: 8px solid #fff;
-    border-right-color: transparent; /*円の右にC状の空きをつける*/
+    border-right-color: transparent;
+    animation: spin 1s linear infinite;
 }
