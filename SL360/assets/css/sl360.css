@@ -74,10 +74,17 @@ body{
     right: 18px;
 }
 
-.pv-loading {
+.pv-loading-position {
     display: none;
-    position: fixed;
-    width: 100%;
     text-align: center;
     top: calc(50% - 1em);
+}
+
+.pv-loading {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 8px solid #fff;
+    border-right-color: transparent; /*円の右にC状の空きをつける*/
 }
